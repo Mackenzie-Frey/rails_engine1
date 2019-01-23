@@ -4,6 +4,6 @@ class InvoiceItem < ApplicationRecord
   validates :quantity, numericality: {only_integer: true, greater_than_or_equal_to: 0}
   validates :unit_price, numericality: {only_integer: true, greater_than: 0}
 
-  # belongs_to :item
-  # belongs_to :invoice
+  belongs_to :item
+  belongs_to :invoice
 end

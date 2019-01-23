@@ -3,5 +3,5 @@ class Item < ApplicationRecord
 
   validates :unit_price, numericality: {only_integer: true, greater_than: 0}
 
-  # belongs_to :merchant
+  belongs_to :merchant
 end

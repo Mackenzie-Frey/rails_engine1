@@ -7,5 +7,6 @@ RSpec.describe Customer, type: :model do
   end
 
   describe 'Relationships' do
+    it {should have_many :invoices}
   end
 end

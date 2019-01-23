@@ -3,5 +3,5 @@ class Transaction < ApplicationRecord
 
   validates :credit_card_number, numericality: {only_integer: true}
 
-  # belongs_to :invoice
+  belongs_to :invoice
 end
