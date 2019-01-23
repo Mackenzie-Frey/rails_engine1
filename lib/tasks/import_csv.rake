@@ -53,3 +53,33 @@ namespace :import do
         end
       end
 end
+
+namespace :import do
+  desc 'Imports ALL data from CSV files'
+      task :all => :environment do
+
+        CSV.foreach('./db/csv/customers.csv', :headers => true) do |row|
+          Customer.create!(row.to_h)
+        end
+
+        CSV.foreach('./db/csv/merchants.csv', :headers => true) do |row|
+          Merchant.create!(row.to_h)
+        end
+
+        CSV.foreach('./db/csv/items.csv', :headers => true) do |row|
+          Item.create!(row.to_h)
+        end
+
+        CSV.foreach('./db/csv/invoices.csv', :headers => true) do |row|
+          Invoice.create!(row.to_h)
+        end
+
+        CSV.foreach('./db/csv/invoice_items.csv', :headers => true) do |row|
+          InvoiceItem.create!(row.to_h)
+        end
+
+        CSV.foreach('./db/csv/transactions.csv', :headers => true) do |row|
+          Transaction.create!(row.to_h)
+        end
+      end
+end
