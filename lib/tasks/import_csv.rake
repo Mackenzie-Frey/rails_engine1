@@ -18,6 +18,15 @@ namespace :import do
       end
 end
 
+namespace :import do
+  desc 'Imports item data from CSV file'
+      task :items => :environment do
+        CSV.foreach('./db/csv/items.csv', :headers => true) do |row|
+          Item.create!(row.to_h)
+        end
+      end
+end
+
       # task all: :environment do
       #
       # end
