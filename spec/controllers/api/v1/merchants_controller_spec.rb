@@ -1,7 +1,7 @@
 require 'rails_helper'
 
-RSpec.describe Api::V1::CustomersController, type: :controller do
-
+RSpec.describe Api::V1::MerchantsController, type: :controller do
+  
   describe "GET #show" do
     it "returns http success" do
       get :show
