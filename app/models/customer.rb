@@ -14,9 +14,4 @@ class Customer < ApplicationRecord
     # .limit(1)
 
   end
-
-  def self.top_merchants
-    binding.pry
-    # Merchant.joins(invoices: :transactions)
-  end
 end
