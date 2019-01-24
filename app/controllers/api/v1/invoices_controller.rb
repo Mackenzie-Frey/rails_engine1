@@ -1,4 +1,4 @@
-class Api::Vi::Invoices::InvoicesController < ApplicationController
+class Api::Vi::InvoicesController < ApplicationController
   def index
     render json: InvoiceSerializer.new(Invoice.all)
   end
