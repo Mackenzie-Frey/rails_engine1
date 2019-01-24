@@ -6,8 +6,11 @@ class Merchant < ApplicationRecord
 
   def self.top_merchants
     binding.pry
-    # Merchant.joins(invoices: :transactions)
+    # Merchant
+    # .select(merchants .* JOIN)
+    # .joins(:invoices)
+    # .joins("")
     # .sum()
-    # .order
+    # .order(total_revenue)
   end
 end
