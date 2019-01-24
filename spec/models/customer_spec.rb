@@ -44,9 +44,9 @@ RSpec.describe Customer, type: :model do
 
       @failed_transaction_4 = create(:transaction, invoice: @invoice_4)
     end
-      it '.top_merchants' do
+      it '.top_merchants(count)' do
 
-        expect(Merchant.top_merchants).to eq([@merchant_3, @merchant_2, @merchant_1])
+        expect(Merchant.top_merchants(2)).to eq([@merchant_3, @merchant_2])
       end
   end
 
