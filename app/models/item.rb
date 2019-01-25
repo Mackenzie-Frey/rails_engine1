@@ -9,12 +9,25 @@ class Item < ApplicationRecord
   def self.by_top_revenue(n)
     Item
     .joins(:invoice_items)
-    .joins("transactions ON invoice_items.invoices = transactions.invoices")
+    .joins("INNER JOIN transactions ON invoice_items.invoice_id = transactions.invoice_id")
     .where("transactions.result = 'success'")
     .select("items.*, SUM(invoice_items.quantity * invoice_items.unit_price) AS item_revenue")
     .where("transactions.result = 'success'")
     .group(:id)
-    .order("merchant_revenue DESC")
+    .order("item_revenue DESC")
     .limit(n)
   end
+
+  def self.by_top_quantity_sold(n)
+    Item
+    .joins(:invoice_items)
+    .joins("INNER JOIN transactions ON invoice_items.invoice_id = transactions.invoice_id")
+    .where("transactions.result = 'success'")
+    .select("items.*, SUM(invoice_items.quantity) AS item_quantity_sold")
+    .where("transactions.result = 'success'")
+    .group(:id)
+    .order("item_quantity_sold DESC")
+    .limit(n)
+  end
+
 end
