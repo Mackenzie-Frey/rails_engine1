@@ -50,7 +50,7 @@ RSpec.describe Item, type: :model do
 
     it '.by_top_revenue(limit)' do
 
-      expect(Item.by_top_revenue{2}).to eq([@item_3, @item_2])
+      expect(Item.by_top_revenue(2)).to eq([@item_3, @item_2])
     end
   end
 end
