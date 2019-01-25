@@ -5,8 +5,7 @@ class Merchant < ApplicationRecord
   has_many :invoices
 
   def self.highest_revenue(n)
-    Merchant
-    .joins(invoices: :invoice_items)
+    joins(invoices: :invoice_items)
     .joins(invoices: :transactions)
     .select("merchants.*, SUM(invoice_items.quantity * invoice_items.unit_price) AS merchant_revenue")
     .where("transactions.result = 'success'")
@@ -17,8 +16,7 @@ class Merchant < ApplicationRecord
 
   def self.most_items_sold(n)
     # Spoiler: invoices are successful when they have one successful transaction.
-    Merchant
-    .joins(invoices: :invoice_items)
+    joins(invoices: :invoice_items)
     .joins(invoices: :transactions)
     .select("merchants.*, SUM(invoice_items.quantity * invoice_items.unit_price) AS quantity_sold")
     .where("transactions.result = 'success'")

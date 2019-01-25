@@ -7,8 +7,7 @@ class Item < ApplicationRecord
   has_many :invoice_items
 
   def self.by_top_revenue(n)
-    Item
-    .joins(:invoice_items)
+    joins(:invoice_items)
     .joins("INNER JOIN transactions ON invoice_items.invoice_id = transactions.invoice_id")
     .where("transactions.result = 'success'")
     .select("items.*, SUM(invoice_items.quantity * invoice_items.unit_price) AS item_revenue")
@@ -19,8 +18,7 @@ class Item < ApplicationRecord
   end
 
   def self.by_top_quantity_sold(n)
-    Item
-    .joins(:invoice_items)
+    joins(:invoice_items)
     .joins("INNER JOIN transactions ON invoice_items.invoice_id = transactions.invoice_id")
     .where("transactions.result = 'success'")
     .select("items.*, SUM(invoice_items.quantity) AS item_quantity_sold")
