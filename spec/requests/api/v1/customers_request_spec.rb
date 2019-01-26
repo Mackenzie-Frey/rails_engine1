@@ -14,16 +14,19 @@ describe "Customers API" do
 end
 
 describe "Customer API - Single Finders" do
-  before :each do
-    c2 = create(:customer, first_name: "Name_2", last_name: "Last Name", created_at: "2012-04-27 14:54:09 UTC", updated_at: "2012-04-27 14:54:09 UTC")
-  end
-
   it 'Single finders - ID' do
     c1 = create(:customer, first_name: "Joey", last_name: "Ondricka", created_at: "2012-03-27 14:54:09 UTC", updated_at: "2012-03-27 14:54:09 UTC")
+    c2 = create(:customer, first_name: "Name_2", last_name: "Last Name", created_at: "2012-04-27 14:54:09 UTC", updated_at: "2012-04-27 14:54:09 UTC")
 
     get "/api/v1/customers/find?id=#{c1.id}"
 
     expect(response).to be_successful
+
+    customers = JSON.parse(response.body)
+
+    expect(customers["data"]["id"]).to eq("#{c1.id}")
+    expect(customers["data"]["attributes"]["first_name"]).to eq("#{c1.first_name}")
+    expect(customers["data"]["attributes"]["last_name"]).to eq("#{c1.last_name}")
   end
 end
 
