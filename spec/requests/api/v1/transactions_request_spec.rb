@@ -1,15 +1,15 @@
 require 'rails_helper'
 
-describe "Items API" do
-  xit "sends a list of items" do
-    create_list(:item, 3)
+describe "Transactions API" do
+  it "sends a list of transactions" do
+    create_list(:transaction, 7)
 
-    get "/api/v1/items"
+    get api_v1_transactions_path
 
     expect(response).to be_successful
 
-    items = JSON.parse(response.body)
+    transactions = JSON.parse(response.body)
 
-    expect(items.count).to eq(3)
+    expect(transactions["data"].count).to eq(7)
   end
 end

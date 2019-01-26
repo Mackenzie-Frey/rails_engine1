@@ -1,15 +1,15 @@
 require 'rails_helper'
 
-describe "Items API" do
-  xit "sends a list of items" do
-    create_list(:item, 3)
+describe "Merchants API" do
+  it "sends a list of merchants" do
+    create_list(:merchant, 6)
 
-    get "/api/v1/items"
+    get api_v1_merchants_path
 
     expect(response).to be_successful
 
-    items = JSON.parse(response.body)
+    merchants = JSON.parse(response.body)
 
-    expect(items.count).to eq(3)
+    expect(merchants["data"].count).to eq(6)
   end
 end
