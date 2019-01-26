@@ -15,7 +15,6 @@ class Merchant < ApplicationRecord
   end
 
   def self.most_items_sold(n)
-    # Spoiler: invoices are successful when they have one successful transaction.
     joins(invoices: :invoice_items)
     .joins(invoices: :transactions)
     .select("merchants.*, SUM(invoice_items.quantity * invoice_items.unit_price) AS quantity_sold")

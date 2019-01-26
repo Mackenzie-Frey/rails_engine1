@@ -35,8 +35,8 @@ describe "Items API" do
     @failed_transaction_4 = create(:transaction, invoice: @invoice_4)
   end
 
-  it "sends a list of items" do
-    
+  xit "sends a list of items" do
+
     get api_v1_items_path
 
     expect(response).to be_successful
@@ -46,15 +46,19 @@ describe "Items API" do
     expect(items["data"].count).to eq(3)
   end
 
-  it 'returns the top x items ranked by total revenue generated' do
-    create_list(:item, 5)
+  xit 'returns the top x items ranked by total revenue generated' do
 
     get "api/v1/items/most_revenue?quantity=2"
 
     items = JSON.parse(response.body)
 
     expect(response).to be_successful
-    # expect().to eq
+    # below -> is this how I want to test it.
+    expect(items).to eq([@item_3, @item_2])
   end
 
 end
+# params[:quantity]
+#
+# call the top revenue method instide controller (or have controller pass params to a method and have the method break out the params quantity, that wil be equal to the limit
+# change n (to params[:quantit]))

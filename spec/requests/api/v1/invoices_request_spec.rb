@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe "Invoices API" do
-  it "Sends a list of invoices" do
+  xit "Sends a list of invoices" do
     create_list(:invoice, 4)
 
     get api_v1_invoices_path
