@@ -58,11 +58,36 @@ describe "Customer API - Single Finders" do
     expect(customers["data"]["attributes"]["first_name"]).to eq("#{c1.first_name}")
     expect(customers["data"]["attributes"]["last_name"]).to eq("#{c1.last_name}")
   end
+
+  it 'Single finders - created_at' do
+    c1 = create(:customer, first_name: "Joey", last_name: "Ondricka", created_at: "2012-03-27 14:54:09 UTC", updated_at: "2012-03-27 14:54:09 UTC")
+    c2 = create(:customer, first_name: "Name_2", last_name: "Last Name", created_at: "2012-04-27 14:54:09 UTC", updated_at: "2012-04-27 14:54:09 UTC")
+
+    get "/api/v1/customers/find?created_at=#{c1.created_at}"
+
+    expect(response).to be_successful
+
+    customers = JSON.parse(response.body)
+
+    expect(customers["data"]["id"]).to eq("#{c1.id}")
+    expect(customers["data"]["attributes"]["first_name"]).to eq("#{c1.first_name}")
+    expect(customers["data"]["attributes"]["last_name"]).to eq("#{c1.last_name}")
+  end
 end
 
-#   id,first_name,last_name,created_at,updated_at
+describe "Customer API - Multi-Finders" do
+  it 'Multi-finders - ID' do
+    c1 = create(:customer, id: 1, first_name: "Joey", last_name: "Ondricka", created_at: "2012-03-27 14:54:09 UTC", updated_at: "2012-03-27 14:54:09 UTC")
+    c2 = create(:customer, id: 2, first_name: "First Name", last_name: "Last Name", created_at: "2012-04-27 14:54:09 UTC", updated_at: "2012-04-27 14:54:09 UTC")
 
-# do for customers first test, routing, serializing. hand roll routes (rewrite
-# index, show, first name , last name, create_at, updated at
-# complete single and multi for one fulla resource
-# check every time in local host, copy path and paste into local,
+    get "/api/v1/customers/find_all?id=#{c1.id}"
+
+    expect(response).to be_successful
+
+    customers = JSON.parse(response.body)
+
+    expect(customers["data"][0]["id"]).to eq("#{c1.id}")
+    expect(customers["data"][0]["attributes"]["first_name"]).to eq("#{c1.first_name}")
+    expect(customers["data"][0]["attributes"]["last_name"]).to eq("#{c1.last_name}")
+  end
+end

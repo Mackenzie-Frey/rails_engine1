@@ -1,7 +1,10 @@
 class Api::V1::Customers::SearchController < ApplicationController
   def show
     render json: CustomerSerializer.new(Customer.find_by(look_up_params))
-    #right about after .find_by, look up maybe sql to pul in there
+  end
+
+  def index
+    render json: CustomerSerializer.new(Customer.where(look_up_params))
   end
 
   private
