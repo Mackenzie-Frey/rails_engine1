@@ -1,21 +1,21 @@
 Rails.application.routes.draw do
-#   namespace :api do
-#     namespace :v1 do
-#
-#       # namespace :items do
-#       #   get '/most_revenue?quantity=x', to: "items#some_controller"
-#       # end
-#
-# patch "/items/toggle/:id", to: "items#toggle", as: "item_toggle"
-#
-#       resources :transactions, only: [:index, :show]
-#       resources :merchants, only: [:index, :show]
-#       resources :items, only: [:index, :show]
-#       resources :invoices, only: [:index, :show]
-#       resources :invoice_items, only: [:index, :show]
-#       resources :customers, only: [:index, :show]
-#     end
-#   end
+  namespace :api do
+    namespace :v1 do
+      namespace :customers do
+        get '/find', to: 'search#show'
+      end
+      resources :customers, only: [:index, :show]
+  #       # namespace :items do
+  #       #   get '/most_revenue?quantity=x', to: "items#some_controller"
+  #       # end
+  #
+  #       resources :transactions, only: [:index, :show]
+  #       resources :merchants, only: [:index, :show]
+  #       resources :items, only: [:index, :show]
+  #       resources :invoices, only: [:index, :show]
+  #       resources :invoice_items, only: [:index, :show]
+    end
+  end
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
 
