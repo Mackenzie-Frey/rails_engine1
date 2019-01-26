@@ -11,3 +11,12 @@ Rails.application.routes.draw do
   end
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
+
+# GET /api/v1/items/most_revenue?quantity=x
+#
+# namespace items
+#   hand roll
+#   get '/most_revenue' to
+#   make a controller under my items
+#
+#   controller merchant:revenue controller
