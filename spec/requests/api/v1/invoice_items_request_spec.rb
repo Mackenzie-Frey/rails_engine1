@@ -31,10 +31,12 @@ describe "Invoice Items API - Single Finders" do
     ii1 = create(:invoice_item, item: item1, invoice: invoice1, quantity: 100, unit_price: 2, created_at: "2013-03-13 16:54:10 UTC", updated_at: "2013-03-07 12:54:10 UTC")
     ii2 = create(:invoice_item, item: item1, invoice: invoice1, quantity: 100, unit_price: 2, created_at: "2013-03-13 16:54:10 UTC", updated_at: "2013-03-07 12:54:10 UTC")
 
-    get "api/vi/invoice_items/find?id=#{ii1.id}"
+    get "/api/v1/invoice_items/find?id=#{ii1.id}"
 
     expect(response).to be_successful
-    
 
+    invoice_items = JSON.parse(response.body)
+
+    expect(invoice_items["data"]["id"]).to eq(i1.id.to_s)
   end
 end
