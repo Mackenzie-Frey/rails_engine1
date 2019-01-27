@@ -37,6 +37,6 @@ describe "Invoice Items API - Single Finders" do
 
     invoice_items = JSON.parse(response.body)
 
-    expect(invoice_items["data"]["id"]).to eq(i1.id.to_s)
+    expect(invoice_items["data"]["id"]).to eq(ii1.id.to_s)
   end
 end
