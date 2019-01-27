@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe "Transactions API" do
-  xit "sends a list of transactions" do
+  it "sends a list of transactions" do
     create_list(:transaction, 7)
 
     get api_v1_transactions_path
