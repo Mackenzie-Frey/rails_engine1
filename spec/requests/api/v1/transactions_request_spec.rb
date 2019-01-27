@@ -169,7 +169,7 @@ describe "Transactions API - Multi Finders" do
 
     transactions = JSON.parse(response.body)
 
-    expect(transactions["data"]["id"]).to eq(t1.id.to_s)
-
+    expect(invoice_items["data"].count).to eq(1)
+    expect(transactions["data"][0]["id"]).to eq(t1.id.to_s)
   end
 end
