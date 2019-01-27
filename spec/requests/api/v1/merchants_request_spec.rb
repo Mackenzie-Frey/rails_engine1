@@ -13,7 +13,7 @@ describe "Merchants API" do
     expect(merchants["data"].count).to eq(6)
   end
 end
-
+#
 describe "Merchant API - Single Finders" do
   it 'Single finders - ID' do
     m1 = create(:merchant, name: "M1", created_at: "2012-03-27 14:54:09 UTC", updated_at: "2012-03-27 14:54:09 UTC")
