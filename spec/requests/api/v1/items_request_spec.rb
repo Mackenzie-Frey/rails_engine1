@@ -35,7 +35,7 @@ describe "Items API" do
     @failed_transaction_4 = create(:transaction, invoice: @invoice_4)
   end
 
-  xit "sends a list of items" do
+  it "sends a list of items" do
 
     get api_v1_items_path
 
@@ -58,7 +58,260 @@ describe "Items API" do
   end
 
 end
-# params[:quantity]
-#
-# call the top revenue method instide controller (or have controller pass params to a method and have the method break out the params quantity, that wil be equal to the limit
-# change n (to params[:quantit]))
+
+describe "Items API - Single Finders" do
+  it 'Single Finder - ID' do
+    m1 = create(:merchant)
+    m2 = create(:merchant)
+
+    item1 = create(:item, name: "item_1_name", description: "desc1", unit_price: 100, merchant: m1, created_at: "2013-03-13 16:54:10 UTC", updated_at: "2013-03-07 12:54:10 UTC")
+    item2 = create(:item, name: "item_2_name", description: "desc2", unit_price: 200, merchant: m2, created_at: "2015-03-13 16:54:10 UTC", updated_at: "2015-03-07 12:54:10 UTC")
+
+    get "/api/v1/items/find?id=#{i1.id}"
+
+    expect(response).to be_successful
+
+    items = JSON.parse(response.body)
+
+    expect(items["data"]["id"]).to eq(i1.id.to_s)
+    expect(items["data"]["attributes"]["merchant_id"]).to eq(m1.id)
+  end
+
+  it 'Single Finder - Name' do
+    m1 = create(:merchant)
+    m2 = create(:merchant)
+
+    item1 = create(:item, name: "item_1_name", description: "desc1", unit_price: 100, merchant: m1, created_at: "2013-03-13 16:54:10 UTC", updated_at: "2013-03-07 12:54:10 UTC")
+    item2 = create(:item, name: "item_2_name", description: "desc2", unit_price: 200, merchant: m2, created_at: "2015-03-13 16:54:10 UTC", updated_at: "2015-03-07 12:54:10 UTC")
+
+    get "/api/v1/items/find?name=#{item1.name}"
+
+    expect(response).to be_successful
+
+    items = JSON.parse(response.body)
+
+    expect(items["data"]["id"]).to eq(i1.id.to_s)
+    expect(items["data"]["attributes"]["merchant_id"]).to eq(m1.id)
+  end
+
+  it 'Single Finder - Description' do
+    m1 = create(:merchant)
+    m2 = create(:merchant)
+
+    item1 = create(:item, name: "item_1_name", description: "desc1", unit_price: 100, merchant: m1, created_at: "2013-03-13 16:54:10 UTC", updated_at: "2013-03-07 12:54:10 UTC")
+    item2 = create(:item, name: "item_2_name", description: "desc2", unit_price: 200, merchant: m2, created_at: "2015-03-13 16:54:10 UTC", updated_at: "2015-03-07 12:54:10 UTC")
+
+    get "/api/v1/items/find?description=#{item1.description}"
+
+    expect(response).to be_successful
+
+    items = JSON.parse(response.body)
+
+    expect(items.count).to eq(1)
+    expect(items["data"]["id"]).to eq(i2.id.to_s)
+    expect(items["data"]["attributes"]["customer_id"]).to eq(c2.id)
+  end
+
+  it 'Single Finder - Unit_Price' do
+    m1 = create(:merchant)
+    m2 = create(:merchant)
+
+    item1 = create(:item, name: "item_1_name", description: "desc1", unit_price: 100, merchant: m1, created_at: "2013-03-13 16:54:10 UTC", updated_at: "2013-03-07 12:54:10 UTC")
+    item2 = create(:item, name: "item_2_name", description: "desc2", unit_price: 200, merchant: m2, created_at: "2015-03-13 16:54:10 UTC", updated_at: "2015-03-07 12:54:10 UTC")
+
+    get "/api/v1/items/find?unit_price=#{item1.unit_price}"
+
+    expect(response).to be_successful
+
+    items = JSON.parse(response.body)
+
+    expect(items.count).to eq(1)
+    expect(items["data"]["id"]).to eq(i2.id.to_s)
+    expect(items["data"]["attributes"]["customer_id"]).to eq(c2.id)
+  end
+
+  it 'Single Finder - Merchant_Id' do
+    m1 = create(:merchant)
+    m2 = create(:merchant)
+
+    item1 = create(:item, name: "item_1_name", description: "desc1", unit_price: 100, merchant: m1, created_at: "2013-03-13 16:54:10 UTC", updated_at: "2013-03-07 12:54:10 UTC")
+    item2 = create(:item, name: "item_2_name", description: "desc2", unit_price: 200, merchant: m2, created_at: "2015-03-13 16:54:10 UTC", updated_at: "2015-03-07 12:54:10 UTC")
+
+    get "/api/v1/items/find?merchant_id=#{m1.id}"
+
+    expect(response).to be_successful
+
+    items = JSON.parse(response.body)
+
+    expect(items["data"]["id"]).to eq(i1.id.to_s)
+    expect(items["data"]["attributes"]["customer_id"]).to eq(c1.id)
+  end
+
+
+  it 'Single Finder - Created_At' do
+    m1 = create(:merchant)
+    m2 = create(:merchant)
+
+    item1 = create(:item, name: "item_1_name", description: "desc1", unit_price: 100, merchant: m1, created_at: "2013-03-13 16:54:10 UTC", updated_at: "2013-03-07 12:54:10 UTC")
+    item2 = create(:item, name: "item_2_name", description: "desc2", unit_price: 200, merchant: m2, created_at: "2015-03-13 16:54:10 UTC", updated_at: "2015-03-07 12:54:10 UTC")
+
+    get "/api/v1/items/find?created_at=#{i1.created_at}"
+
+    expect(response).to be_successful
+
+    items = JSON.parse(response.body)
+
+    expect(items["data"]["id"]).to eq(i1.id.to_s)
+    expect(items["data"]["attributes"]["customer_id"]).to eq(c1.id)
+  end
+
+  it 'Single Finder - Updated_At' do
+    m1 = create(:merchant)
+    m2 = create(:merchant)
+
+    item1 = create(:item, name: "item_1_name", description: "desc1", unit_price: 100, merchant: m1, created_at: "2013-03-13 16:54:10 UTC", updated_at: "2013-03-07 12:54:10 UTC")
+    item2 = create(:item, name: "item_2_name", description: "desc2", unit_price: 200, merchant: m2, created_at: "2015-03-13 16:54:10 UTC", updated_at: "2015-03-07 12:54:10 UTC")
+
+    get "/api/v1/items/find?updated_at=#{i1.updated_at}"
+
+    expect(response).to be_successful
+
+    items = JSON.parse(response.body)
+
+    expect(items["data"]["id"]).to eq(i1.id.to_s)
+    expect(items["data"]["attributes"]["customer_id"]).to eq(c1.id)
+  end
+
+end
+
+describe "Items API - Multi Finders" do
+  it 'Multi Finder - ID' do
+    m1 = create(:merchant)
+    m2 = create(:merchant)
+
+    item1 = create(:item, name: "item_1_name", description: "desc1", unit_price: 100, merchant: m1, created_at: "2013-03-13 16:54:10 UTC", updated_at: "2013-03-07 12:54:10 UTC")
+    item2 = create(:item, name: "item_2_name", description: "desc2", unit_price: 200, merchant: m2, created_at: "2015-03-13 16:54:10 UTC", updated_at: "2015-03-07 12:54:10 UTC")
+
+    get "/api/v1/items/find_all?id=#{i1.id}"
+
+    expect(response).to be_successful
+
+    items = JSON.parse(response.body)
+
+    expect(items["data"].count).to eq(1)
+    expect(items["data"][0]["id"]).to eq(i1.id.to_s)
+    expect(items["data"][0]["attributes"]["merchant_id"]).to eq(m1.id)
+  end
+
+  it 'Multi Finder - Name' do
+    m1 = create(:merchant)
+    m2 = create(:merchant)
+
+    item1 = create(:item, name: "item_1_name", description: "desc1", unit_price: 100, merchant: m1, created_at: "2013-03-13 16:54:10 UTC", updated_at: "2013-03-07 12:54:10 UTC")
+    item2 = create(:item, name: "item_2_name", description: "desc2", unit_price: 200, merchant: m2, created_at: "2015-03-13 16:54:10 UTC", updated_at: "2015-03-07 12:54:10 UTC")
+
+    get "/api/v1/items/find_all?customer_id=#{c1.id}"
+
+    expect(response).to be_successful
+
+    items = JSON.parse(response.body)
+
+    expect(items["data"].count).to eq(2)
+    expect(items["data"][0]["id"]).to eq(i1.id.to_s)
+    expect(items["data"][0]["attributes"]["merchant_id"]).to eq(m1.id)
+  end
+
+  it 'Multi Finder - Merchant_Id' do
+    m1 = create(:merchant)
+    m2 = create(:merchant)
+
+    item1 = create(:item, name: "item_1_name", description: "desc1", unit_price: 100, merchant: m1, created_at: "2013-03-13 16:54:10 UTC", updated_at: "2013-03-07 12:54:10 UTC")
+    item2 = create(:item, name: "item_2_name", description: "desc2", unit_price: 200, merchant: m2, created_at: "2015-03-13 16:54:10 UTC", updated_at: "2015-03-07 12:54:10 UTC")
+
+    get "/api/v1/items/find_all?merchant_id=#{m1.id}"
+
+    expect(response).to be_successful
+
+    items = JSON.parse(response.body)
+
+    expect(items["data"].count).to eq(2)
+    expect(items["data"][0]["id"]).to eq(i1.id.to_s)
+    expect(items["data"][0]["attributes"]["customer_id"]).to eq(c1.id)
+  end
+
+  it 'Multi Finder - Description' do
+    m1 = create(:merchant)
+    m2 = create(:merchant)
+
+    item1 = create(:item, name: "item_1_name", description: "desc1", unit_price: 100, merchant: m1, created_at: "2013-03-13 16:54:10 UTC", updated_at: "2013-03-07 12:54:10 UTC")
+    item2 = create(:item, name: "item_2_name", description: "desc2", unit_price: 200, merchant: m2, created_at: "2015-03-13 16:54:10 UTC", updated_at: "2015-03-07 12:54:10 UTC")
+
+    get "/api/v1/items/find_all?description=#{item1.description}"
+
+    expect(response).to be_successful
+
+    items = JSON.parse(response.body)
+
+    expect(items["data"].count).to eq(2)
+    expect(items["data"][0]["id"]).to eq(i2.id.to_s)
+    expect(items["data"][1]["id"]).to eq(i3.id.to_s)
+    expect(items["data"][0]["attributes"]["customer_id"]).to eq(c2.id)
+  end
+
+  it 'Multi Finder - Unit_Price' do
+    m1 = create(:merchant)
+    m2 = create(:merchant)
+
+    item1 = create(:item, name: "item_1_name", description: "desc1", unit_price: 100, merchant: m1, created_at: "2013-03-13 16:54:10 UTC", updated_at: "2013-03-07 12:54:10 UTC")
+    item2 = create(:item, name: "item_2_name", description: "desc2", unit_price: 200, merchant: m2, created_at: "2015-03-13 16:54:10 UTC", updated_at: "2015-03-07 12:54:10 UTC")
+
+    get "/api/v1/items/find?unit_price=#{item1.unit_price}"
+
+    expect(response).to be_successful
+
+    items = JSON.parse(response.body)
+
+    expect(items.count).to eq(1)
+    expect(items["data"]["id"]).to eq(i2.id.to_s)
+    expect(items["data"]["attributes"]["customer_id"]).to eq(c2.id)
+  end
+
+
+  it 'Multi Finder - Created_At' do
+    m1 = create(:merchant)
+    m2 = create(:merchant)
+
+    item1 = create(:item, name: "item_1_name", description: "desc1", unit_price: 100, merchant: m1, created_at: "2013-03-13 16:54:10 UTC", updated_at: "2013-03-07 12:54:10 UTC")
+    item2 = create(:item, name: "item_2_name", description: "desc2", unit_price: 200, merchant: m2, created_at: "2015-03-13 16:54:10 UTC", updated_at: "2015-03-07 12:54:10 UTC")
+
+    get "/api/v1/items/find_all?created_at=#{i2.created_at}"
+
+    expect(response).to be_successful
+
+    items = JSON.parse(response.body)
+
+    expect(items["data"].count).to eq(2)
+    expect(items["data"][0]["type"]).to eq("invoice")
+    expect(items["data"][1]["type"]).to eq("invoice")
+  end
+
+  it 'Multi Finder - Updated_At' do
+    m1 = create(:merchant)
+    m2 = create(:merchant)
+
+    item1 = create(:item, name: "item_1_name", description: "desc1", unit_price: 100, merchant: m1, created_at: "2013-03-13 16:54:10 UTC", updated_at: "2013-03-07 12:54:10 UTC")
+    item2 = create(:item, name: "item_2_name", description: "desc2", unit_price: 200, merchant: m2, created_at: "2015-03-13 16:54:10 UTC", updated_at: "2015-03-07 12:54:10 UTC")
+
+    get "/api/v1/items/find_all?updated_at=#{i2.updated_at}"
+
+    expect(response).to be_successful
+
+    items = JSON.parse(response.body)
+
+    expect(items["data"].count).to eq(2)
+    expect(items["data"][0]["type"]).to eq("invoice")
+    expect(items["data"][1]["type"]).to eq("invoice")
+  end
+
+
+end
