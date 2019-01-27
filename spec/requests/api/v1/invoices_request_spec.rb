@@ -82,7 +82,7 @@ describe "Invoices API - Single Finders" do
     m1 = create(:merchant)
     m2 = create(:merchant)
 
-    i1 = create(:invoice, customer: c1, merchant: m1, status: "shipped", created_at: "2012-03-13 16:54:10 UTC", updated_at: "2012-03-07 12:54:10 UTC")
+    i1 = create(:invoice, customer: c1, merchant: m1, status: "not shipped", created_at: "2012-03-13 16:54:10 UTC", updated_at: "2012-03-07 12:54:10 UTC")
     i2 = create(:invoice, customer: c2, merchant: m2, status: "shipped", created_at: "2013-03-13 16:54:10 UTC", updated_at: "2013-03-07 12:54:10 UTC")
 
     get "/api/v1/invoices/find?status=shipped"
@@ -91,7 +91,48 @@ describe "Invoices API - Single Finders" do
 
     invoices = JSON.parse(response.body)
 
+    expect(invoices["data"]["id"]).to eq(i2.id.to_s)
+    expect(invoices["data"]["attributes"]["customer_id"]).to eq(c2.id)
+  end
+
+  it 'Single Finder - Created_At' do
+    c1 = create(:customer)
+    c2 = create(:customer)
+
+    m1 = create(:merchant)
+    m2 = create(:merchant)
+
+    i1 = create(:invoice, customer: c1, merchant: m1, status: "not shipped", created_at: "2012-03-13 16:54:10 UTC", updated_at: "2012-03-07 12:54:10 UTC")
+    i2 = create(:invoice, customer: c2, merchant: m2, status: "shipped", created_at: "2013-03-13 16:54:10 UTC", updated_at: "2013-03-07 12:54:10 UTC")
+
+    get "/api/v1/invoices/find?created_at=#{i1.created_at}"
+
+    expect(response).to be_successful
+
+    invoices = JSON.parse(response.body)
+
     expect(invoices["data"]["id"]).to eq(i1.id.to_s)
     expect(invoices["data"]["attributes"]["customer_id"]).to eq(c1.id)
   end
+
+  it 'Single Finder - Updated_At' do
+    c1 = create(:customer)
+    c2 = create(:customer)
+
+    m1 = create(:merchant)
+    m2 = create(:merchant)
+
+    i1 = create(:invoice, customer: c1, merchant: m1, status: "not shipped", created_at: "2012-03-13 16:54:10 UTC", updated_at: "2012-03-07 12:54:10 UTC")
+    i2 = create(:invoice, customer: c2, merchant: m2, status: "shipped", created_at: "2013-03-13 16:54:10 UTC", updated_at: "2013-03-07 12:54:10 UTC")
+
+    get "/api/v1/invoices/find?updated_at=#{i1.updated_at}"
+
+    expect(response).to be_successful
+
+    invoices = JSON.parse(response.body)
+
+    expect(invoices["data"]["id"]).to eq(i1.id.to_s)
+    expect(invoices["data"]["attributes"]["customer_id"]).to eq(c1.id)
+  end
+
 end
