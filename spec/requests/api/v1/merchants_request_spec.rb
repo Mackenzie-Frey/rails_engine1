@@ -217,7 +217,7 @@ describe 'Merchant Business Intelligence Endpoints' do
 end
 
 describe 'Relationship Endpoints - Merchants' do
-  it 'returns a collection of items associated with that merchant' do
+  it 'Returns a collection of items associated with that merchant' do
     m1 = create(:merchant)
     m2 = create(:merchant)
 
