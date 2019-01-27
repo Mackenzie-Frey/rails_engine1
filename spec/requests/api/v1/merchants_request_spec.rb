@@ -197,4 +197,20 @@ describe 'Merchant Business Intelligence Endpoints' do
       expect(merchants["data"][0]["id"]).to eq("#{@merchant_3.id}")
       expect(merchants["data"][1]["id"]).to eq("#{@merchant_2.id}")
     end
+
+    it 'Merchants - Returns the top x merchants ranked by total number of items sold' do
+
+      get '/api/v1/merchants/most_items?quantity=2'
+
+      expect(response).to be_successful
+
+      merchants = JSON.parse(response.body)
+
+      expect(merchants["data"].count).to eq(2)
+      expect(merchants["data"][0]["type"]).to eq("merchant")
+      expect(merchants["data"][1]["type"]).to eq("merchant")
+      expect(merchants["data"][1]["type"]).to eq("merchant")
+      expect(merchants["data"][0]["id"]).to eq("#{@merchant_3.id}")
+      expect(merchants["data"][1]["id"]).to eq("#{@merchant_2.id}")
+    end
 end
