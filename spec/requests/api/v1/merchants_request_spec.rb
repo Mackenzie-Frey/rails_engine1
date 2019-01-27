@@ -4,7 +4,7 @@ describe "Merchants API" do
   it "sends a list of merchants" do
     create_list(:merchant, 6)
 
-    get api_v1_merchants_path
+    get '/api/v1/merchants'
 
     expect(response).to be_successful
 
@@ -213,4 +213,29 @@ describe 'Merchant Business Intelligence Endpoints' do
       expect(merchants["data"][0]["id"]).to eq("#{@merchant_3.id}")
       expect(merchants["data"][1]["id"]).to eq("#{@merchant_2.id}")
     end
+
+end
+
+describe 'Relationship Endpoints - Merchants' do
+  it 'returns a collection of items associated with that merchant' do
+    m1 = create(:merchant)
+    m2 = create(:merchant)
+
+    item_1 = create(:item, merchant:m1)
+    item_2 = create(:item, merchant:m1)
+    item_3 = create(:item, merchant:m2)
+
+    get "/api/v1/merchants/#{m1.id}/items"
+
+    expect(response).to be_successful
+
+    items = JSON.parse(response.body)
+
+    expect(items["data"].count).to eq(2)
+    expect(items["data"][0]["type"]).to eq("item")
+    expect(items["data"][1]["type"]).to eq("item")
+    expect(items["data"][0]["id"]).to eq(m2.id.to_s)
+    expect(items["data"][1]["id"]).to eq(m3.id.to_s)
+  end
+
 end

@@ -8,8 +8,8 @@ class Api::V1::Customers::SearchController < ApplicationController
   end
 
   private
+    def look_up_params
+      params.permit(:id, :first_name, :last_name, :created_at, :updated_at)
+    end
 
-  def look_up_params
-    params.permit(:id, :first_name, :last_name, :created_at, :updated_at)
-  end
 end
