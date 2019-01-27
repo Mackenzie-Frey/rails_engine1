@@ -392,6 +392,4 @@ describe "Invoice Items API - Multi Finders" do
     expect(invoice_items["data"][1]["id"]).to eq(ii3.id.to_s)
   end
 
-
-
 end
