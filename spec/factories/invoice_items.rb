@@ -1,8 +1,8 @@
 FactoryBot.define do
   factory :invoice_item do
-    item { nil }
-    invoice { nil }
-    quantity { 1 }
-    unit_price { 1 }
+    item
+    invoice
+    sequence(:quantity) { |n| n.to_i }
+    sequence(:unit_price) { |n| n.to_i }
   end
 end
