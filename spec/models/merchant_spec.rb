@@ -53,7 +53,7 @@ RSpec.describe Merchant, type: :model do
 
         expect(Merchant.most_items_sold(2)).to eq([@merchant_3, @merchant_2])
       end
-
-
+        
   end
+
 end
