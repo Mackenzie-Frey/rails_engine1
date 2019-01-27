@@ -171,6 +171,7 @@ describe "Transactions API - Multi Finders" do
 
     expect(transactions["data"].count).to eq(1)
     expect(transactions["data"][0]["id"]).to eq(t1.id.to_s)
+    expect(transactions["data"][0]["type"]).to eq("transaction")
   end
 
   it 'Multi Finder - Invoice_ID' do
@@ -194,6 +195,7 @@ describe "Transactions API - Multi Finders" do
 
     expect(transactions["data"].count).to eq(1)
     expect(transactions["data"][0]["id"]).to eq(t1.id.to_s)
+    expect(transactions["data"][0]["type"]).to eq("transaction")
   end
 
   it 'Multi Finder - Credit_Card_Number' do
@@ -218,6 +220,33 @@ describe "Transactions API - Multi Finders" do
 
     expect(transactions["data"].count).to eq(2)
     expect(transactions["data"][0]["id"]).to eq(t1.id.to_s)
+    expect(transactions["data"][0]["type"]).to eq("transaction")
+    expect(transactions["data"][1]["type"]).to eq("transaction")
+  end
+
+  it 'Multi Finder - Result' do
+    c1 = create(:customer)
+    c2 = create(:customer)
+
+    m1 = create(:merchant)
+    m2 = create(:merchant)
+
+    i1 = create(:invoice, customer: c1, merchant: m1, status: "shipped", created_at: "2012-03-14 16:54:10 UTC", updated_at: "2012-03-02 12:54:10 UTC")
+    i2 = create(:invoice, customer: c2, merchant: m2, status: "shipped", created_at: "2013-03-17 16:54:10 UTC", updated_at: "2013-03-01 12:54:10 UTC")
+
+    t1 = create(:transaction, invoice: i1, credit_card_number: "4580251236515201", result: "success", created_at: "2012-05-27 14:54:09 UTC", updated_at: "2012-03-27 14:54:09 UTC")
+    t2 = create(:transaction, invoice: i2, credit_card_number: "4580251236515333", result: "failed", created_at: "2012-03-22 14:54:09 UTC", updated_at: "2015-03-27 14:54:09 UTC")
+    t2 = create(:transaction, invoice: i2, credit_card_number: "458025123651533", result: "failed", created_at: "2012-03-22 14:54:09 UTC", updated_at: "2015-03-27 14:54:09 UTC")
+
+    get "/api/v1/transactions/find_all?result=#{t2.result}"
+
+    expect(response).to be_successful
+
+    transactions = JSON.parse(response.body)
+
+    expect(transactions["data"].count).to eq(2)
+    expect(transactions["data"][0]["type"]).to eq("transaction")
+    expect(transactions["data"][1]["type"]).to eq("transaction")
   end
 
 

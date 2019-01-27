@@ -271,6 +271,8 @@ describe "Invoice Items API - Multi Finders" do
 
     expect(invoice_items["data"].count).to eq(2)
     expect(invoice_items["data"][0]["id"]).to eq(ii2.id.to_s)
+    expect(invoice_items["data"][0]["type"]).to eq("invoice_item")
+    expect(invoice_items["data"][1]["type"]).to eq("invoice_item")
   end
 
   it 'Multi Finder - Quantity' do
@@ -300,6 +302,8 @@ describe "Invoice Items API - Multi Finders" do
 
     expect(invoice_items["data"].count).to eq(2)
     expect(invoice_items["data"][0]["id"]).to eq(ii2.id.to_s)
+    expect(invoice_items["data"][0]["type"]).to eq("invoice_item")
+    expect(invoice_items["data"][1]["type"]).to eq("invoice_item")
   end
 
   it 'Multi Finder - Unit_Price' do
@@ -330,6 +334,8 @@ describe "Invoice Items API - Multi Finders" do
     expect(invoice_items["data"].count).to eq(2)
     expect(invoice_items["data"][0]["id"]).to eq(ii2.id.to_s)
     expect(invoice_items["data"][1]["id"]).to eq(ii3.id.to_s)
+    expect(invoice_items["data"][0]["type"]).to eq("invoice_item")
+    expect(invoice_items["data"][1]["type"]).to eq("invoice_item")
   end
 
   it 'Multi Finder - Created_At' do
@@ -360,6 +366,8 @@ describe "Invoice Items API - Multi Finders" do
     expect(invoice_items["data"].count).to eq(2)
     expect(invoice_items["data"][0]["id"]).to eq(ii2.id.to_s)
     expect(invoice_items["data"][1]["id"]).to eq(ii3.id.to_s)
+    expect(invoice_items["data"][0]["type"]).to eq("invoice_item")
+    expect(invoice_items["data"][1]["type"]).to eq("invoice_item")
   end
 
   it 'Multi Finder - Updated_At' do
@@ -390,6 +398,8 @@ describe "Invoice Items API - Multi Finders" do
     expect(invoice_items["data"].count).to eq(2)
     expect(invoice_items["data"][0]["id"]).to eq(ii2.id.to_s)
     expect(invoice_items["data"][1]["id"]).to eq(ii3.id.to_s)
+    expect(invoice_items["data"][0]["type"]).to eq("invoice_item")
+    expect(invoice_items["data"][1]["type"]).to eq("invoice_item")
   end
 
 end
