@@ -238,4 +238,25 @@ describe 'Relationship Endpoints - Merchants' do
     expect(items["data"][0]["relationships"]["merchant"]["data"]["id"]).to eq(m1.id.to_s)
   end
 
+  it 'Returns a collection of invoices associated with that merchant from their known orders' do
+    m1 = create(:merchant)
+    m2 = create(:merchant)
+
+    item_1 = create(:item, merchant:m1)
+    item_2 = create(:item, merchant:m1)
+    item_3 = create(:item, merchant:m2)
+
+    get "/api/v1/merchants/#{m1.id}/invoices"
+
+    expect(response).to be_successful
+
+    invoices = JSON.parse(response.body)
+
+    expect(invoices["data"].count).to eq(2)
+    expect(invoices["data"][0]["type"]).to eq("item")
+    expect(invoices["data"][1]["type"]).to eq("item")
+    expect(invoices["data"][0]["relationships"]["merchant"]["data"]["id"]).to eq(m1.id.to_s)
+    expect(invoices["data"][0]["relationships"]["merchant"]["data"]["id"]).to eq(m1.id.to_s)
+  end
+
 end
