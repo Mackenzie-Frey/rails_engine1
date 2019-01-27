@@ -22,6 +22,7 @@ Rails.application.routes.draw do
         get '/find_all', to: 'search#index'
         get '/:id/transactions', to: 'transactions_of_invoice#index'
         get '/:id/invoice_items', to: 'invoice_items_of_invoice#index'
+        get '/:id/items', to: 'items_of_invoice#index'
       end
       resources :invoices, only: [:index, :show]
 

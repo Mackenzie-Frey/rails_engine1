@@ -331,4 +331,36 @@ describe 'Relationship Endpoints - Invoices' do
     expect(invoice_items["data"][1]["type"]).to eq("invoice_item")
   end
 
+  it 'Returns a collection of associated items' do
+    c1 = create(:customer)
+    c2 = create(:customer)
+
+    m1 = create(:merchant)
+    m2 = create(:merchant)
+
+    invoice_1 = create(:invoice, customer: c1, merchant: m1, status: "shipped", created_at: "2012-03-14 16:54:10 UTC", updated_at: "2012-03-02 12:54:10 UTC")
+    invoice_2 = create(:invoice, customer: c2, merchant: m2, status: "shipped", created_at: "2013-03-17 16:54:10 UTC", updated_at: "2013-03-01 12:54:10 UTC")
+
+    item_1 = create(:item, merchant: m1)
+    item_2 = create(:item, merchant: m2)
+
+    ii1 = create(:invoice_item, item: item_1, invoice: invoice_1, quantity: 100, unit_price: 2, created_at: "2012-03-13 16:54:10 UTC", updated_at: "2011-03-07 12:54:10 UTC")
+    ii2 = create(:invoice_item, item: item_2, invoice: invoice_2, quantity: 200, unit_price: 3, created_at: "2016-03-13 16:54:10 UTC", updated_at: "2014-03-07 12:54:10 UTC")
+    ii3 = create(:invoice_item, item: item_1, invoice: invoice_2, quantity: 300, unit_price: 4, created_at: "2016-03-13 16:54:10 UTC", updated_at: "2014-03-07 12:54:10 UTC")
+
+    t1 = create(:transaction, invoice: invoice_1, credit_card_number: "4580251236515201", result: "success", created_at: "2012-05-27 14:54:09 UTC", updated_at: "2012-03-27 14:54:09 UTC")
+    t2 = create(:transaction, invoice: invoice_2, credit_card_number: "4580251236515333", result: "failed", created_at: "2012-03-22 14:54:09 UTC", updated_at: "2015-03-27 14:54:09 UTC")
+    t3 = create(:transaction, invoice: invoice_2, credit_card_number: "458025123651533", result: "failed", created_at: "2012-03-22 14:54:10 UTC", updated_at: "2015-03-27 14:54:09 UTC")
+
+    get "/api/v1/invoices/#{invoice_2.id}/items"
+
+    expect(response).to be_successful
+
+    items = JSON.parse(response.body)
+
+    expect(items["data"].count).to eq(2)
+    expect(items["data"][0]["type"]).to eq("item")
+    expect(items["data"][1]["type"]).to eq("item")
+  end
+
 end
