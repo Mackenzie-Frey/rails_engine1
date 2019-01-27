@@ -234,8 +234,8 @@ describe 'Relationship Endpoints - Merchants' do
     expect(items["data"].count).to eq(2)
     expect(items["data"][0]["type"]).to eq("item")
     expect(items["data"][1]["type"]).to eq("item")
-    expect(items["data"][0]["id"]).to eq(m2.id.to_s)
-    expect(items["data"][1]["id"]).to eq(m3.id.to_s)
+    expect(items["data"][0]["relationships"]["merchant"]["data"]["id"]).to eq(m1.id.to_s)
+    expect(items["data"][0]["relationships"]["merchant"]["data"]["id"]).to eq(m1.id.to_s)
   end
 
 end

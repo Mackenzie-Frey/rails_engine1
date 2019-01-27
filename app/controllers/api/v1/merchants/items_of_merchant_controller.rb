@@ -1,9 +1,6 @@
 class Api::V1::Merchants::ItemsOfMerchantController < ApplicationController
-
   def index
-    merchant = render json: MerchantSerializer.new(Merchant.find_by(look_up_params))
-
-    render json: ItemSerializer.new(Item.where(merchant["data"]["id"] = look_up_params))
+    render json: ItemSerializer.new(Merchant.find_by(look_up_params).items)
   end
 
   private
@@ -12,9 +9,3 @@ class Api::V1::Merchants::ItemsOfMerchantController < ApplicationController
     end
 
 end
-
-
-# items = Merchant.find(params{;id].items
-#   render json Assocaited Items serializer
-
-# rails g serializer AssociatedItem
