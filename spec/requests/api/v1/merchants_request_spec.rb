@@ -246,6 +246,11 @@ describe 'Relationship Endpoints - Merchants' do
     item_2 = create(:item, merchant:m1)
     item_3 = create(:item, merchant:m2)
 
+    invoice_1 = create(:invoice, merchant: m1)
+    invoice_2 = create(:invoice, merchant: m1)
+    invoice_3 = create(:invoice, merchant: m2)
+
+
     get "/api/v1/merchants/#{m1.id}/invoices"
 
     expect(response).to be_successful
@@ -253,8 +258,8 @@ describe 'Relationship Endpoints - Merchants' do
     invoices = JSON.parse(response.body)
 
     expect(invoices["data"].count).to eq(2)
-    expect(invoices["data"][0]["type"]).to eq("item")
-    expect(invoices["data"][1]["type"]).to eq("item")
+    expect(invoices["data"][0]["type"]).to eq("invoice")
+    expect(invoices["data"][1]["type"]).to eq("invoice")
     expect(invoices["data"][0]["relationships"]["merchant"]["data"]["id"]).to eq(m1.id.to_s)
     expect(invoices["data"][0]["relationships"]["merchant"]["data"]["id"]).to eq(m1.id.to_s)
   end
