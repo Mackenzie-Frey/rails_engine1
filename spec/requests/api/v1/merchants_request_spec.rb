@@ -117,6 +117,8 @@ describe "Mechant API - Multi-Finders" do
     merchants = JSON.parse(response.body)
 
     expect(merchants["data"].count).to eq(2)
+    expect(merchants["data"][0]["type"]).to eq("merchant")
+    expect(merchants["data"][1]["type"]).to eq("merchant")
     expect(merchants["data"][0]["id"]).to eq("#{m1.id}")
     expect(merchants["data"][1]["id"]).to eq("#{m2.id}")
     expect(merchants["data"][0]["attributes"]["name"]).to eq("#{m1.name}")
@@ -135,6 +137,8 @@ describe "Mechant API - Multi-Finders" do
     merchants = JSON.parse(response.body)
 
     expect(merchants["data"].count).to eq(2)
+    expect(merchants["data"][0]["type"]).to eq("merchant")
+    expect(merchants["data"][1]["type"]).to eq("merchant")
     expect(merchants["data"][0]["id"]).to eq("#{m1.id}")
     expect(merchants["data"][1]["id"]).to eq("#{m2.id}")
     expect(merchants["data"][0]["attributes"]["name"]).to eq("#{m1.name}")

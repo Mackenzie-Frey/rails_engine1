@@ -152,6 +152,9 @@ describe "Customer API - Multi-Finders" do
 
     customers = JSON.parse(response.body)
 
+    expect(customers["data"].count).to eq(2)
+    expect(customers["data"][0]["type"]).to eq("customer")
+    expect(customers["data"][1]["type"]).to eq("customer")
     expect(customers["data"][0]["id"]).to eq("#{c1.id}")
     expect(customers["data"][1]["id"]).to eq("#{c2.id}")
     expect(customers["data"][0]["attributes"]["first_name"]).to eq("#{c1.first_name}")
@@ -170,6 +173,9 @@ describe "Customer API - Multi-Finders" do
 
     customers = JSON.parse(response.body)
 
+    expect(customers["data"].count).to eq(2)
+    expect(customers["data"][0]["type"]).to eq("customer")
+    expect(customers["data"][1]["type"]).to eq("customer")
     expect(customers["data"][0]["id"]).to eq("#{c1.id}")
     expect(customers["data"][1]["id"]).to eq("#{c2.id}")
     expect(customers["data"][0]["attributes"]["first_name"]).to eq("#{c1.first_name}")
@@ -177,5 +183,5 @@ describe "Customer API - Multi-Finders" do
     expect(customers["data"][0]["attributes"]["last_name"]).to eq("#{c1.last_name}")
     expect(customers["data"][1]["attributes"]["last_name"]).to eq("#{c2.last_name}")
   end
-  
+
 end
