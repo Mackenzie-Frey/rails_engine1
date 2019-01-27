@@ -192,7 +192,7 @@ describe "Invoice Items API - Single Finders" do
 
 end
 
-describe "Invoices API - Multi Finders" do
+describe "Invoice Items API - Multi Finders" do
   it 'Multi Finder - ID' do
     c1 = create(:customer)
     c2 = create(:customer)
@@ -209,9 +209,16 @@ describe "Invoices API - Multi Finders" do
     ii1 = create(:invoice_item, item: item1, invoice: invoice1, quantity: 100, unit_price: 2, created_at: "2012-03-13 16:54:10 UTC", updated_at: "2011-03-07 12:54:10 UTC")
     ii2 = create(:invoice_item, item: item2, invoice: invoice2, quantity: 200, unit_price: 3, created_at: "2016-03-13 16:54:10 UTC", updated_at: "2014-03-07 12:54:10 UTC")
 
-    get "api/v1/invoice_items/find_all?id=#{ii1.id}"
+    get "/api/v1/invoice_items/find_all?id=#{ii1.id}"
 
     expect(response).to be_successful
+
+    invoice_items = JSON.parse(response.body)
+
+    expect(invoice_items["data"].count).to eq(1)
+    expect(invoice_items["data"][0]["id"]).to eq(ii1.id.to_s)
   end
+
+
 
 end
