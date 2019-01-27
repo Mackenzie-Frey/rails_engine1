@@ -368,4 +368,20 @@ describe 'Business Intelligence Endpoint - Items' do
       expect(items["data"][1]["id"]).to eq("#{@item_2.id}")
     end
 
+    it 'Items - Returns the top x item instances ranked by total number sold' do
+
+      get '/api/v1/items/most_items?quantity=2'
+
+      expect(response).to be_successful
+
+      items = JSON.parse(response.body)
+
+      expect(items["data"].count).to eq(2)
+      expect(items["data"][0]["type"]).to eq("item")
+      expect(items["data"][1]["type"]).to eq("item")
+      expect(items["data"][1]["type"]).to eq("item")
+      expect(items["data"][0]["id"]).to eq("#{@item_3.id}")
+      expect(items["data"][1]["id"]).to eq("#{@item_2.id}")
+    end
+
 end
