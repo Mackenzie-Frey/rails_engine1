@@ -181,6 +181,7 @@ describe 'Merchant Business Intelligence Endpoints' do
 
     @failed_transaction_4 = create(:transaction, invoice: @invoice_4)
   end
+
     it 'All Merchants - Returns the top x merchants ranked by total revenue' do
 
       get '/api/v1/merchants/most_revenue?quantity=2'
@@ -193,7 +194,7 @@ describe 'Merchant Business Intelligence Endpoints' do
       expect(merchants["data"][0]["type"]).to eq("merchant")
       expect(merchants["data"][1]["type"]).to eq("merchant")
       expect(merchants["data"][1]["type"]).to eq("merchant")
-      expect(merchants["data"][0]["id"]).to eq("#{m3.id}")
-      expect(merchants["data"][1]["id"]).to eq("#{m2.id}")
+      expect(merchants["data"][0]["id"]).to eq("#{@merchant_3.id}")
+      expect(merchants["data"][1]["id"]).to eq("#{@merchant_2.id}")
     end
 end
