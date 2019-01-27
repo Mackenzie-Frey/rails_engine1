@@ -72,7 +72,7 @@ describe "Merchant API - Single Finders" do
   end
 end
 
-describe "Customer API - Multi-Finders" do
+describe "Mechant API - Multi-Finders" do
   it 'Multi-finders - ID' do
     m1 = create(:merchant, name: "M1", created_at: "2012-03-27 14:54:09 UTC", updated_at: "2012-03-27 14:54:09 UTC")
     m2 = create(:merchant, name: "M2", created_at: "2012-04-27 14:54:09 UTC", updated_at: "2012-04-27 14:54:09 UTC")
