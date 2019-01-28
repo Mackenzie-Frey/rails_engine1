@@ -14,4 +14,11 @@ class Customer < ApplicationRecord
   #   # .limit(1)
   #
   # end
+
+  def find_transactions
+    invoices.map do |invoice|
+      Transaction.where(invoice_id: invoice.id)
+    end.flatten
+  end
+
 end
