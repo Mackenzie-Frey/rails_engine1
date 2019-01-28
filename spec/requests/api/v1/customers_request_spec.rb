@@ -11,6 +11,12 @@ describe "Customers API" do
     customers = JSON.parse(response.body)
     expect(customers["data"].count).to eq(2)
   end
+
+  it 'Random URL' do
+    get "/api/v1/customers/random"
+
+    expect(response).to be_successful
+  end
 end
 
 describe "Customer API - Single Finders" do

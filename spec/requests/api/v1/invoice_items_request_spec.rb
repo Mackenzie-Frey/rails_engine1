@@ -12,6 +12,13 @@ describe "Invoice Items API" do
 
     expect(invoice_items["data"].count).to eq(3)
   end
+
+  it 'Random URL' do
+    get "/api/v1/invoice_items/random"
+
+    expect(response).to be_successful
+  end
+  
 end
 
 describe "Invoice Items API - Single Finders" do
