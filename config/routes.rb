@@ -40,6 +40,7 @@ Rails.application.routes.draw do
         get '/find', to: 'search#show'
         get '/find_all', to: 'search#index'
         get '/:id/invoice', to: 'invoice_of_invoice_item#show'
+        get '/:id/item', to: 'item_of_invoice_item#show'
       end
 
       resources :invoice_items, only: [:index, :show]
