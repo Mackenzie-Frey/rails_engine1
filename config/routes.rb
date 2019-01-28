@@ -4,6 +4,7 @@ Rails.application.routes.draw do
       namespace :customers do
         get '/find', to: 'search#show'
         get '/find_all', to: 'search#index'
+        get '/:id/invoices', to: 'invoices_of_customer#index'        
       end
       resources :customers, only: [:index, :show]
 
@@ -44,7 +45,6 @@ Rails.application.routes.draw do
         get '/:id/invoice', to: 'invoice_of_invoice_item#show'
         get '/:id/item', to: 'item_of_invoice_item#show'
       end
-
       resources :invoice_items, only: [:index, :show]
 
       namespace :transactions do
@@ -52,9 +52,10 @@ Rails.application.routes.draw do
         get '/find_all', to: 'search#index'
         get '/:id/invoice', to: 'invoice_of_transaction#show'
       end
-
       resources :transactions, only: [:index, :show]
+
     end
+
   end
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

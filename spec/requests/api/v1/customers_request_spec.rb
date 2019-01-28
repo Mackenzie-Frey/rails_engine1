@@ -4,7 +4,7 @@ describe "Customers API" do
   it "sends a list of customers" do
     create_list(:customer, 2)
 
-    get api_v1_customers_path
+    get '/api/v1/customers'
 
     expect(response).to be_successful
 
@@ -182,6 +182,35 @@ describe "Customer API - Multi-Finders" do
     expect(customers["data"][1]["attributes"]["first_name"]).to eq("#{c2.first_name}")
     expect(customers["data"][0]["attributes"]["last_name"]).to eq("#{c1.last_name}")
     expect(customers["data"][1]["attributes"]["last_name"]).to eq("#{c2.last_name}")
+  end
+
+end
+
+describe 'Relationship Endpoints - Customers' do
+  it 'Returns a collection of associated invoices' do
+    c1 = create(:customer)
+    c2 = create(:customer)
+
+    m1 = create(:merchant)
+    m2 = create(:merchant)
+
+    i1 = create(:invoice, customer: c1, merchant: m1, status: "shipped", created_at: "2012-03-14 16:54:10 UTC", updated_at: "2012-03-02 12:54:10 UTC")
+    i2 = create(:invoice, customer: c2, merchant: m2, status: "shipped", created_at: "2013-03-17 16:54:10 UTC", updated_at: "2013-03-01 12:54:10 UTC")
+    i3 = create(:invoice, customer: c2, merchant: m2, status: "shipped", created_at: "2013-03-17 16:54:10 UTC", updated_at: "2013-03-01 12:54:10 UTC")
+
+    t1 = create(:transaction, invoice: i1, credit_card_number: "4580251236515201", result: "success", created_at: "2012-05-27 14:54:09 UTC", updated_at: "2012-03-27 14:54:09 UTC")
+    t2 = create(:transaction, invoice: i2, credit_card_number: "4580251236515333", result: "failed", created_at: "2012-03-22 14:54:09 UTC", updated_at: "2015-03-27 14:54:09 UTC")
+    t3 = create(:transaction, invoice: i2, credit_card_number: "458025123651533", result: "failed", created_at: "2012-03-22 14:54:10 UTC", updated_at: "2015-03-27 14:54:09 UTC")
+
+    get "/api/v1/customers/#{c2.id}/invoices"
+
+    expect(response).to be_successful
+
+    invoices = JSON.parse(response.body)
+
+    expect(invoices["data"].count).to eq(2)
+    expect(invoices["data"][0]["type"]).to eq("invoice")
+    expect(invoices["data"][1]["type"]).to eq("invoice")
   end
 
 end
