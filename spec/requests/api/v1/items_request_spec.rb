@@ -43,6 +43,12 @@ describe "Items API" do
     expect(items["data"].count).to eq(3)
   end
 
+  it 'Random URL' do
+    get "/api/v1/items/random"
+
+    expect(response).to be_successful
+  end
+
 end
 
 describe "Items API - Single Finders" do

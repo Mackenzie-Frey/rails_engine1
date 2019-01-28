@@ -12,6 +12,13 @@ describe "Merchants API" do
 
     expect(merchants["data"].count).to eq(6)
   end
+
+  it 'Random URL' do
+    get "/api/v1/merchants/random"
+
+    expect(response).to be_successful
+  end
+
 end
 
 describe "Merchant API - Single Finders" do

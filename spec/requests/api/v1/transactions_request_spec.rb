@@ -12,6 +12,13 @@ describe "Transactions API" do
 
     expect(transactions["data"].count).to eq(7)
   end
+
+  it 'Random URL' do
+    get "/api/v1/transactions/random"
+
+    expect(response).to be_successful
+  end
+
 end
 
 describe "Transactions API - Single Finders" do
