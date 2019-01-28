@@ -418,4 +418,29 @@ describe 'Relationship Endpoints - Items' do
     expect(invoice_items["data"][0]["id"]).to eq(ii1.id.to_s)
   end
 
+  it 'Returns the associated merchant' do
+    c1 = create(:customer)
+    c2 = create(:customer)
+
+    m1 = create(:merchant)
+    m2 = create(:merchant)
+
+    invoice1 = create(:invoice, customer: c1, merchant: m1, status: "shipped", created_at: "2012-03-14 16:54:10 UTC", updated_at: "2012-03-02 12:54:10 UTC")
+    invoice2 = create(:invoice, customer: c2, merchant: m2, status: "shipped", created_at: "2013-03-17 16:54:10 UTC", updated_at: "2013-03-01 12:54:10 UTC")
+    invoice3 = create(:invoice, customer: c2, merchant: m2, status: "shipped", created_at: "2013-03-17 16:54:10 UTC", updated_at: "2013-03-01 12:54:10 UTC")
+
+    item1 = create(:item, name: "item_1_name", description: "desc1", unit_price: 100, merchant: m1, created_at: "2013-03-13 16:54:10 UTC", updated_at: "2013-03-07 12:54:10 UTC")
+    item2 = create(:item, name: "item_2_name", description: "desc2", unit_price: 200, merchant: m2, created_at: "2015-03-13 16:54:10 UTC", updated_at: "2015-03-07 12:54:10 UTC")
+    item3 = create(:item, name: "item_2_name", description: "desc2", unit_price: 200, merchant: m2, created_at: "2015-03-13 16:54:10 UTC", updated_at: "2015-03-07 12:54:10 UTC")
+
+    get "/api/v1/items/#{item1.id}/merchant"
+
+    expect(response).to be_successful
+
+    merchant = JSON.parse(response.body)
+
+    expect(merchant["data"]["type"]).to eq("merchant")
+    expect(merchant["data"]["id"]).to eq(m1.id.to_s)
+  end
+
 end

@@ -1,6 +1,6 @@
 class Api::V1::Items::InvoiceItemsOfItemController < ApplicationController
 
-  def show
+  def index
     render json: InvoiceItemSerializer.new(Item.find_by(look_up_params).invoice_items)
   end
 
