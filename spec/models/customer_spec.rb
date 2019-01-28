@@ -30,5 +30,23 @@ RSpec.describe Customer, type: :model do
       expect(customer.favorite_merchant).to eq(merchant_1)
       # returns a merchant where the customer has conducted the most successful transactions
     end
+
+    it '.find_transactions' do
+      c1 = create(:customer)
+      c2 = create(:customer)
+
+      m1 = create(:merchant)
+      m2 = create(:merchant)
+
+      i1 = create(:invoice, customer: c1, merchant: m1, status: "shipped", created_at: "2012-03-14 16:54:10 UTC", updated_at: "2012-03-02 12:54:10 UTC")
+      i2 = create(:invoice, customer: c2, merchant: m2, status: "shipped", created_at: "2013-03-17 16:54:10 UTC", updated_at: "2013-03-01 12:54:10 UTC")
+
+      t1 = create(:transaction, invoice: i1, credit_card_number: "4580251236515201", result: "success", created_at: "2012-05-27 14:54:09 UTC", updated_at: "2012-03-27 14:54:09 UTC")
+      t2 = create(:transaction, invoice: i2, credit_card_number: "4580251236515333", result: "failed", created_at: "2012-03-22 14:54:09 UTC", updated_at: "2015-03-27 14:54:09 UTC")
+      t3 = create(:transaction, invoice: i2, credit_card_number: "458025123651533", result: "failed", created_at: "2012-03-22 14:54:10 UTC", updated_at: "2015-03-27 14:54:09 UTC")
+
+      expect(c2.find_transactions).to eq([t2, t3])
+    end
   end
+
 end

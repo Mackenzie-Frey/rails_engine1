@@ -4,7 +4,8 @@ Rails.application.routes.draw do
       namespace :customers do
         get '/find', to: 'search#show'
         get '/find_all', to: 'search#index'
-        get '/:id/invoices', to: 'invoices_of_customer#index'        
+        get '/:id/invoices', to: 'invoices_of_customer#index'
+        get '/:id/transactions', to: 'transactions_of_customer#index'        
       end
       resources :customers, only: [:index, :show]
 
